@@ -1,1 +1,6 @@
-export * from './example'
+export * from './SlateEntityLabeler'
+import * as models from './models'
+
+export {
+    models
+}
