@@ -15,6 +15,7 @@
     "build"
   ],
   "dependencies": {
+    "fuse.js": "^3.2.1",
     "immutable": "^3.8.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

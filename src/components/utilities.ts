@@ -1,6 +1,23 @@
 import * as models from './models'
 import { Value } from 'slate'
 
+/**
+ * Recursively walk up DOM tree until root or parent with non-static position is found.
+ * (relative, fixed, or absolute) which will be used as reference for absolutely positioned elements within it
+ */
+export const getRelativeParent = (element: HTMLElement | null): HTMLElement => {
+    if (!element) {
+        return document.body
+    }
+
+    const position = window.getComputedStyle(element).getPropertyValue('position')
+    if (position !== 'static') {
+        return element
+    }
+
+    return getRelativeParent(element.parentElement)
+};
+
 export const convertEntitiesAndTextToTokenizedEditorValue = (text: string, labeledEntities: models.ILabel<any>[]): models.SlateValue => {
     const labeledTokens = labelTokens(tokenizeText(text, tokenizeRegex), labeledEntities)
     return convertToSlateValue(labeledTokens)
@@ -238,4 +255,104 @@ export const convertToSlateValue = (tokensWithEntities: models.TokenArray): any 
     }
 
     return Value.fromJSON(document)
+}
+
+export const convertMatchedTextIntoMatchedOption = <T>(inputText: string, matches: [number, number][], original: T): models.MatchedOption<T> => {
+    const matchedStrings = matches.reduce<models.ISegement[]>((segements, [startIndex, originalEndIndex]) => {
+        // TODO: For some reason the Fuse.io library returns the end index before the last character instead of after
+        // I opened issue here for explanation: https://github.com/krisk/Fuse/issues/212
+        let endIndex = originalEndIndex + 1
+        const segementIndexWhereEntityBelongs = segements.findIndex(seg => seg.startIndex <= startIndex && endIndex <= seg.endIndex)
+        const prevSegements = segements.slice(0, segementIndexWhereEntityBelongs)
+        const nextSegements = segements.slice(segementIndexWhereEntityBelongs + 1, segements.length)
+        const segementWhereEntityBelongs = segements[segementIndexWhereEntityBelongs]
+
+        const prevSegementEndIndex = startIndex - segementWhereEntityBelongs.startIndex
+        const prevSegementText = segementWhereEntityBelongs.text.substring(0, prevSegementEndIndex)
+        const prevSegement: models.ISegement = {
+            ...segementWhereEntityBelongs,
+            text: prevSegementText,
+            endIndex: startIndex,
+        }
+
+        const nextSegementStartIndex = endIndex - segementWhereEntityBelongs.startIndex
+        const nextSegementText = segementWhereEntityBelongs.text.substring(nextSegementStartIndex, segementWhereEntityBelongs.text.length)
+        const nextSegement: models.ISegement = {
+            ...segementWhereEntityBelongs,
+            text: nextSegementText,
+            startIndex: endIndex,
+        }
+
+        const newSegement: models.ISegement = {
+            text: segementWhereEntityBelongs.text.substring(prevSegementEndIndex, nextSegementStartIndex),
+            startIndex: startIndex,
+            endIndex: endIndex,
+            type: models.SegementType.Inline,
+            data: {
+                matched: true
+            }
+        }
+
+        const newSegements = []
+        if (prevSegement.startIndex !== prevSegement.endIndex) {
+            newSegements.push(prevSegement)
+        }
+
+        if (newSegement.startIndex !== newSegement.endIndex) {
+            newSegements.push(newSegement)
+        }
+
+        if (nextSegement.startIndex !== nextSegement.endIndex) {
+            newSegements.push(nextSegement)
+        }
+
+        return [...prevSegements, ...newSegements, ...nextSegements]
+    }, [
+            {
+                text: inputText,
+                startIndex: 0,
+                endIndex: inputText.length,
+                type: models.SegementType.Normal,
+                data: {
+                    matched: false
+                }
+            }
+        ]).map(({ text, data }) => ({
+            text,
+            matched: data.matched
+        }))
+
+    return {
+        highlighted: false,
+        original,
+        matchedStrings
+    }
+}
+
+export const getEntitiesFromValueUsingTokenData = (change: any): models.ILabel<models.IEntityData<any>>[] => {
+    const entityInlineNodes = change.value.document.filterDescendants((node: any) => node.type === models.NodeType.EntityNodeType)
+    return (entityInlineNodes.map((entityNode: any) => {
+        const tokenInlineNodes: any[] = entityNode.filterDescendants((node: any) => node.type === models.NodeType.TokenNodeType).toJS()
+        if (tokenInlineNodes.length === 0) {
+            console.warn(`Error 'getEntitiesFromValue': found entity node which did not contain any token nodes `)
+            return null
+        }
+
+        const firstToken: models.IToken = tokenInlineNodes[0].data
+        const lastToken: models.IToken = tokenInlineNodes[tokenInlineNodes.length - 1].data
+        const data: models.IEntityData<any> = entityNode.data.toJS()
+
+        return {
+            startIndex: firstToken.startIndex,
+            endIndex: lastToken.endIndex,
+            data
+        }
+    })
+        .toJS() as any[])
+        .filter(x => x)
+}
+
+export const getSelectedText = (value: models.SlateValue) => {
+    const characters = value.characters ? value.characters.toJSON() : []
+    return characters.reduce((s: string, node: any) => s + node.text, '')
 }
