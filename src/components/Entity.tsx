@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 import * as React from 'react'
-import './CustomEntity.css'
+import './Entity.css'
 
 // Simulate entity component props which have children
 interface EntityComponentProps {

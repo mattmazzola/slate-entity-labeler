@@ -36,7 +36,7 @@ main {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template: auto / 1fr 1fr;
+    grid-template: auto / 1fr 2fr;
     grid-auto-flow: column;
     grid-gap: 1em;
 }

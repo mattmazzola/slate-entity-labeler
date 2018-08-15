@@ -32,13 +32,9 @@ const labeledEntities: models.ILabel<models.IEntityData<IEntity>>[] = [
     startIndex: 20,
     endIndex: 27,
     data: {
-      option: {
-        id: "2",
-        name: "Entity 2",
-        type: "Type 2"
-      },
+      option: { ...entities[1] },
       text: "Seattle",
-      displayName: "Entity 2",
+      displayName: entities[1].name,
       original: entities[1]
     }
   },
@@ -46,14 +42,10 @@ const labeledEntities: models.ILabel<models.IEntityData<IEntity>>[] = [
     startIndex: 31,
     endIndex: 36,
     data: {
-      option: {
-        id: "3",
-        name: "Entity 3",
-        type: "Type 3"
-      },
+      option: { ...entities[2] },
       text: "Cairo",
-      displayName: "Entity 3",
-      original: entities[3]
+      displayName: entities[2].name,
+      original: entities[2]
     }
   }
 ]
@@ -137,7 +129,7 @@ class App extends React.Component<{}, State> {
                 <div className="header">Labels:</div>
                 <ul>
                   {this.state.labeledEntities.map(le => 
-                    <li>{le.data.option.name} [{le.startIndex},{le.endIndex}]</li>
+                    <li>{le.data.option.name} [{le.startIndex},{le.endIndex}] {le.data.text}</li>
                   )}
                 </ul>
               </div>

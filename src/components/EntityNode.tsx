@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 import * as React from 'react'
-import CustomEntity from './CustomEntity'
+import Entity from './Entity'
 import { IEntityData } from './models'
 
 // Simulate entity component props which have children
@@ -56,7 +56,7 @@ export class CustomEntityContainer extends React.Component<Props, State> {
         const { displayName } = nodeData
 
         return (
-            <CustomEntity
+            <Entity
                 isEditing={this.state.isEditing}
                 name={displayName}
                 onClickName={this.onClickName}
@@ -65,7 +65,7 @@ export class CustomEntityContainer extends React.Component<Props, State> {
                 {...this.props.attributes}
             >
                 {...this.props.children}
-            </CustomEntity>
+            </Entity>
         )
     }
 }
