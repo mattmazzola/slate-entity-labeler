@@ -26,7 +26,9 @@ export const CustomEntity = (props: Props) => {
             <div className="cl-entity-node-indicator noselect">
                 <div className="cl-entity-node-indicator__mincontent">
                     <div className="cl-entity-node-indicator__controls">
-                        {isEditing && <button onClick={props.onClickDelete} title="Unselect Entity" />}
+                        {isEditing && <button onClick={props.onClickDelete}>
+                            &times;
+                        </button>}
                     </div>
                     <div className="cl-entity-node-indicator__name noselect" spellCheck={false}>
                         <button type="button" onClick={props.onClickName} tabIndex={-1}>

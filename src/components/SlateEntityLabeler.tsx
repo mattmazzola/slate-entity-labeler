@@ -55,16 +55,6 @@ export class SlateEntityLabeler extends React.Component<Props, State> {
         })
     }
 
-    onClickAddEntity = () => {
-        const newLabeledEntities: models.ILabel<any>[] = [...this.props.labeledEntities, {
-            endIndex: 0,
-            startIndex: 0,
-            data: {}
-        }]
-
-        this.props.onChange(newLabeledEntities)
-    }
-
     getNextPickerProps = (value: models.SlateValue, menu: HTMLElement): models.IEntityPickerProps | void => {
         const hideMenu: models.IEntityPickerProps = {
             isOverlappingOtherEntities: false,
@@ -218,13 +208,17 @@ export class SlateEntityLabeler extends React.Component<Props, State> {
             return
         }
 
+        const data: models.IEntityData<any> = {
+            option,
+            text: selectedText,
+            displayName: option.name,
+            original: null
+        }
+
         const change = value.change()
             .wrapInline({
                 type: models.NodeType.EntityNodeType,
-                data: {
-                    option,
-                    text: selectedText
-                }
+                data
             })
             .collapseToEnd()
 

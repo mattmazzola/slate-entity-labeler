@@ -1,5 +1,59 @@
 body {
-    background: #f5f5f5;
+    background: #fafafa;
+    color: #444;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.title {
+    margin-top: 0;
+    margin-bottom: 1.5em;
+}
+
+header {
+    text-align: center;
+    padding: 8em 8em 10em 8em;
+    background: #9fe1ff;
+}
+
+main {
+    padding: 3em;
+}
+
+.main-demo {
+    padding: 1.5em;
+    background: white;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.main-demo .state {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template: auto / 1fr 1fr;
+    grid-auto-flow: column;
+    grid-gap: 1em;
+}
+
+.main-demo .state .header {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.main-demo .state ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.main-demo .state ul li {
+    margin: 0;
+    padding: 0;
 }
 
 .demo {
@@ -13,17 +67,44 @@ body {
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     grid-gap: 1em;
-    margin-top: 1em;
 }
 .commands > * {
     padding: 0.5em;
-    font-size: 1em;
+    font-size: 0.8em;
 }
 .commands > button {
-    border: none;
-    background: #ffbb00cc;
+    border-radius: 4px;
     margin: 0;
     cursor: pointer;
+}
+
+.commands button {
+    padding: 0.5em 0.75em;
+    border: 1px solid #1a98ff;
+    color: #1a98ff;
+    background: none;
+}
+.commands button:hover {
+    background: #1a98ff48;
+}
+
+.commands button.primary {
+    background: #1a98ff;
+    color: white;
+}
+
+pre {
+    border-radius: 4px;
+    padding: 1em;
+    background-color: rgba(0,0,0,0.05);
+}
+
+code {
+    display: inline;
+    border-radius: 4px;
+    padding: 0.25em;
+    font-size: 1.1rem;
+    background-color: rgba(0,0,0,0.05);
 }
 
 .code-block {
@@ -34,7 +115,10 @@ body {
 .steps {
     display: grid;
     grid-template: auto / 1fr 1fr 1fr;
-    grid-gap: 1em;
+    grid-gap: 0.5em 1em;
+}
+.steps > div {
+    font-weight: bold;
 }
 
 .entities {
@@ -48,4 +132,14 @@ dl {
 
 dd {
     margin: 0;
+}
+
+
+.list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list li {
+    padding: 0.125em 0;
 }

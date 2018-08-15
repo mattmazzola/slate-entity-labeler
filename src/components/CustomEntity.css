@@ -28,18 +28,9 @@
 .cl-entity-node--custom .cl-entity-node__text:hover {
     background: var(--color-custom-entity-bg-hover);
 }
-.cl-entity-node--prebuilt .cl-entity-node__text {
-    background: var(--color-prebuilt-entity-bg-default);
-}
-.cl-entity-node--prebuilt .cl-entity-node__text:hover {
-    background: var(--color-prebuilt-entity-bg-hover);
-}
 
 .cl-entity-node--custom.cl-entity-node--is-editing .cl-entity-node__text {
     background: var(--color-custom-entity-bg);
-}
-.cl-entity-node--prebuilt.cl-entity-node--is-editing .cl-entity-node__text {
-    background: var(--color-prebuilt-entity-bg);
 }
 
 .cl-entity-node-indicator {
@@ -55,9 +46,6 @@
 
 .cl-entity-node--custom .cl-entity-node-indicator {
     color: var(--color-custom-entity-label);
-}
-.cl-entity-node--prebuilt .cl-entity-node-indicator {
-    color: var(--color-prebuilt-entity-label);
 }
 
 .cl-entity-node-indicator__mincontent {
@@ -76,10 +64,6 @@
     cursor: pointer;
     color: white;
     font-size: 0.75rem;
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
 }
 .cl-entity-node--read-only .cl-entity-node-indicator__controls button {
     cursor: default;
@@ -87,9 +71,9 @@
 
 .cl-entity-node--custom .cl-entity-node-indicator__controls button {
     background: var(--color-warning);
-}
-.cl-entity-node--prebuilt .cl-entity-node-indicator__controls button {
-    background: var(--color-warning);
+    border: none;
+    border-radius: 50%;
+    font-size: 13px;
 }
 
 .cl-entity-node-indicator__name {
@@ -114,13 +98,6 @@
 .cl-entity-node--custom .cl-entity-node-indicator__name button {
     background: white;
 }
-.cl-entity-node--prebuilt .cl-entity-node-indicator__name,
-.cl-entity-node--prebuilt .cl-entity-node-indicator__name button {
-    color: var(--color-prebuilt-entity-label);
-}
-.cl-entity-node--prebuilt .cl-entity-node-indicator__name button {
-    background: white;
-}
 
 .cl-entity-node-indicator__bracket {
     height: 5px;
@@ -130,14 +107,4 @@
 
 .cl-entity-node--custom .cl-entity-node-indicator__bracket {
     border-color: var(--color-custom-entity-bg);
-}
-.cl-entity-node--prebuilt .cl-entity-node-indicator__bracket {
-    border-color: var(--color-prebuilt-entity-bg);
-}
-
-.ms-Button--icon.ms-Button--headstone {
-    border-top: 1px solid rgba(0,0,0,0.25);;
-    border-right: 1px solid rgba(0,0,0,0.25);;
-    border-bottom: 1px solid #ffffff;
-    border-left: 1px solid rgba(0,0,0,0.25);;
 }

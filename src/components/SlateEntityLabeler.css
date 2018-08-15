@@ -9,6 +9,7 @@
 }
 .entity-labeler__editor {
     position: relative;
+    text-align: left;
 }
 
 .entity-labeler__custom-editor {
