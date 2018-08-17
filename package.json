@@ -29,7 +29,8 @@
     "build": "react-scripts-ts build",
     "build-lib": "tsc",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "prepublishOnly": "npm run build-lib"
   },
   "devDependencies": {
     "@types/jest": "^23.3.0",
