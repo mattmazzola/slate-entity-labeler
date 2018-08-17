@@ -17,7 +17,17 @@ interface Props {
     onChange: (labeledEntities: models.ILabel<any>[]) => void
     readOnly: boolean
     onClickNewEntity: () => void
-
+    renderPicker?: (
+        isOverlappingOtherEntities: boolean,
+        isVisible: boolean,
+        options: models.IOption[],
+        menuRef: React.Ref<HTMLElement>,
+        position: models.IPosition,
+        value: models.SlateValue,
+    
+        onClickNewEntity: () => void,
+        onSelectOption: (o: models.IOption) => void
+    ) => React.ReactNode
 }
 
 interface State {
@@ -246,18 +256,30 @@ export class SlateEntityLabeler extends React.Component<Props, State> {
                         renderNode={this.renderNode}
                         readOnly={this.props.readOnly}
                     />
-                    <EntityPickerContainer
-                        isOverlappingOtherEntities={this.state.isSelectionOverlappingOtherEntities}
-                        isVisible={this.state.isMenuVisible}
-                        options={this.props.entities}
-                        maxDisplayedOptions={4}
-                        menuRef={this.menuRef}
-                        position={this.state.menuPosition!}
-                        value={this.state.value}
+                        {this.props.renderPicker
+                            ? this.props.renderPicker(
+                                this.state.isSelectionOverlappingOtherEntities,
+                                this.state.isMenuVisible,
+                                this.props.entities,
+                                this.menuRef,
+                                this.state.menuPosition!,
+                                this.state.value,
+                                this.props.onClickNewEntity,
+                                o => this.onSelectOption(o, this.state.value, this.onChange)
+                            )
+                            : <EntityPickerContainer
+                                isOverlappingOtherEntities={this.state.isSelectionOverlappingOtherEntities}
+                                isVisible={this.state.isMenuVisible}
+                                options={this.props.entities}
+                                maxDisplayedOptions={4}
+                                menuRef={this.menuRef}
+                                position={this.state.menuPosition!}
+                                value={this.state.value}
 
-                        onClickNewEntity={this.props.onClickNewEntity}
-                        onSelectOption={o => this.onSelectOption(o, this.state.value, this.onChange)}
-                    />
+                                onClickNewEntity={this.props.onClickNewEntity}
+                                onSelectOption={o => this.onSelectOption(o, this.state.value, this.onChange)}
+                            />
+                        }
                 </div>
             </div>
         </div>
