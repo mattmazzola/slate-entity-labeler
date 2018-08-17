@@ -12,22 +12,32 @@ interface IEntity {
 const entities: IEntity[] = [
   {
     id: '1',
-    name: 'Entity 1',
-    type: 'Type 1'
+    name: 'number',
+    type: 'number'
   },
   {
     id: '2',
-    name: 'Entity 2',
-    type: 'Type 2'
+    name: 'sourceCity',
+    type: 'string'
   },
   {
     id: '3',
-    name: 'Entity 3',
-    type: 'Type 3'
+    name: 'destinationCity',
+    type: 'string'
   }
 ]
 
 const labeledEntities: models.ILabel<models.IEntityData<IEntity>>[] = [
+  {
+    startIndex: 5,
+    endIndex: 6,
+    data: {
+      option: { ...entities[0] },
+      text: "2",
+      displayName: entities[0].name,
+      original: entities[0]
+    }
+  },
   {
     startIndex: 20,
     endIndex: 27,
