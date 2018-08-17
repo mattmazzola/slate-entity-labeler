@@ -2,6 +2,7 @@ body {
     background: #fafafa;
     color: #444;
     margin: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 main {
     line-height: 1.5;
