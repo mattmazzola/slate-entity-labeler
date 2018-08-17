@@ -6,6 +6,7 @@
     "name": "Matt Mazzola",
     "email": "mattmazzola@live.com"
   },
+  "homepage": "https://mattmazzola.github.io/slate-entity-labeler",
   "main": "build/dist/components/index.js",
   "types": "build/dist/components/index.d.ts",
   "engines": {
