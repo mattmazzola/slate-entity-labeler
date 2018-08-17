@@ -140,11 +140,13 @@ class App extends React.Component<{}, State> {
 
               <div>
                 <div className="header">Labels:</div>
-                <ul>
-                  {this.state.labeledEntities.map(le => 
-                    <li>{le.data.option.name} [{le.startIndex},{le.endIndex}] {le.data.text}</li>
+                <div className="labels">
+                  {this.state.labeledEntities.map(le =>
+                    <React.Fragment>
+                      <div>{le.data.option.name}</div><div>[{le.startIndex},{le.endIndex}]</div><div>{le.data.text}</div>
+                    </React.Fragment>
                   )}
-                </ul>
+                </div>
               </div>
             </div>
           </div>

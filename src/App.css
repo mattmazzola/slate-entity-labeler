@@ -2,6 +2,8 @@ body {
     background: #fafafa;
     color: #444;
     margin: 0;
+}
+main {
     line-height: 1.5;
 }
 
@@ -14,6 +16,12 @@ header {
     text-align: center;
     padding: 8em 8em 10em 8em;
     background: #9fe1ff;
+}
+
+.labels {
+    display: grid;
+    grid-template: auto / min-content min-content max-content;
+    grid-gap: 0 0.5em
 }
 
 main {
@@ -115,7 +123,7 @@ code {
 .steps {
     display: grid;
     grid-template: auto / 1fr 1fr 1fr;
-    grid-gap: 0.5em 1em;
+    grid-gap: 0.5em 2em;
 }
 .steps > div {
     font-weight: bold;
