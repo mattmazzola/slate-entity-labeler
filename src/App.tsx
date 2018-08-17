@@ -78,7 +78,8 @@ class App extends React.Component<{}, State> {
       readOnly: false
     })
   }
-  onClickToggleReadOnly = () => {
+
+  onChangeReadOnly = () => {
     this.setState(prevState => ({
       readOnly: !prevState.readOnly
     }))
@@ -112,7 +113,9 @@ class App extends React.Component<{}, State> {
 
             <div className="commands">
               <button type="button" className="primary" onClick={this.onClickReset}>Reset</button>
-              <button type="button" className="default" onClick={this.onClickToggleReadOnly}>Toggle Read-Only</button>
+              <label htmlFor="readOnlyCheckbox">
+                <input id="readOnlyCheckbox" type="checkbox" onChange={this.onChangeReadOnly} />Read-Only
+              </label>
             </div>
 
             <div className="state">
