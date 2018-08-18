@@ -60,9 +60,50 @@ export class SlateEntityLabeler extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        this.setState({
-            value: convertEntitiesAndTextToTokenizedEditorValue(nextProps.text, nextProps.labeledEntities),
-        })
+        /**
+         * This makes assumption that options that are added during the life-cycle of this component are likely
+         * added via users clicking the New Entity item in the menu.  We can then simulate a change of custom entities
+         * effectively auto-labeling the currently selected text with this new entity.
+         */
+        if (nextProps.entities.length !== this.props.entities.length) {
+            const newOptions = nextProps.entities.filter(newOption => this.props.entities.every(oldOption => oldOption.id !== newOption.id))
+            if (newOptions.length === 1) {
+                const newOption = newOptions[0]
+                const value = this.state.value
+                const selectedNodes: any[] = value.inlines.toJS()
+                if (selectedNodes.length > 0 && selectedNodes.every(n => n.type === models.NodeType.TokenNodeType)) {
+                    const startIndex = selectedNodes[0].data.startIndex
+                    const endIndex = selectedNodes[selectedNodes.length - 1].data.endIndex
+                    const selectedText = utilities.getSelectedText(value)
+
+                    const newCustomEntity: models.ILabel<models.IEntityData<any>> = {
+                        startIndex,
+                        endIndex,
+                        data: {
+                            text: selectedText,
+                            displayName: newOption.name,
+                            option: newOption,
+                            // TODO: Refactor this. Shouldn't be null here, but we don't have knowledge of what the type of object is.
+                            // Hopefully this will be re-created on next setState from parents
+                            original: null
+                        }
+                    }
+
+                    this.props.onChange([...nextProps.labeledEntities, newCustomEntity])
+                    return
+                }
+            }
+        }
+
+        // TODO: See if we can avoid all of these checks.  Currently the issue is that when we recompute a new Slate value
+        // we lose the current selection that was existing in the old value and if the selection goes away this forces the EntityPicker menu to close
+        // which disrupts the users interaction with menu.
+        if (nextProps.text !== this.props.text
+            || nextProps.labeledEntities.length !== this.props.labeledEntities.length) {
+            this.setState({
+                value: convertEntitiesAndTextToTokenizedEditorValue(nextProps.text, nextProps.labeledEntities),
+            })
+        }
     }
 
     getNextPickerProps = (value: models.SlateValue, menu: HTMLElement): models.IEntityPickerProps | void => {
@@ -235,6 +276,10 @@ export class SlateEntityLabeler extends React.Component<Props, State> {
         onChange(change)
     }
 
+    onClickNewEntity = () => {
+        this.props.onClickNewEntity()
+    }
+
     renderNode = (props: any): React.ReactNode | void => {
         switch (props.node.type) {
             case models.NodeType.TokenNodeType: return <TokenNode {...props} />
@@ -276,7 +321,7 @@ export class SlateEntityLabeler extends React.Component<Props, State> {
                                 position={this.state.menuPosition!}
                                 value={this.state.value}
 
-                                onClickNewEntity={this.props.onClickNewEntity}
+                                onClickNewEntity={this.onClickNewEntity}
                                 onSelectOption={o => this.onSelectOption(o, this.state.value, this.onChange)}
                             />
                         }

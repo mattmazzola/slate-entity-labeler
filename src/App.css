@@ -67,6 +67,25 @@ main {
     padding: 0;
 }
 
+.main-demo .newEntity {
+    text-align: left;
+    line-height: 1.6;
+    display: grid;
+    grid-template: auto / 1fr max-content;
+    grid-gap: 1em;
+}
+.main-demo .newEntity input {
+    padding: 0.5em;
+}
+
+.main-demo .newEntity button {
+    padding: 0 0.75em;
+    border-radius: 4px;
+    background: #1a98ff;
+    border: none;
+    color: white;
+}
+
 .demo {
     padding: 1.5em;
     background: white;

@@ -65,6 +65,8 @@ interface State {
   readonly entities: IEntity[]
   readonly labeledEntities: models.ILabel<models.IEntityData<IEntity>>[]
   readonly readOnly: boolean
+  readonly isNewEntityVisible: boolean
+  readonly newEntityName: string
 }
 
 class App extends React.Component<{}, State> {
@@ -72,7 +74,9 @@ class App extends React.Component<{}, State> {
     text: "Book 2 tickets from Seattle to Cairo",
     entities: [...entities],
     labeledEntities: [...labeledEntities],
-    readOnly: false
+    readOnly: false,
+    isNewEntityVisible: false,
+    newEntityName: ''
   }
 
   onChangeLabeledEntities = (labeledEntities: models.ILabel<any>[]) => {
@@ -97,6 +101,29 @@ class App extends React.Component<{}, State> {
 
   onClickNewEntity = () => {
     console.log(`onClickNewEntity`)
+    this.setState({
+      isNewEntityVisible: true
+    })
+  }
+
+  onClickSubmitNewEntity = () => {
+    const newEntity: IEntity = {
+      id: new Date().toJSON(),
+      name: this.state.newEntityName,
+      type: 'string'
+    }
+
+    this.setState(prevState => ({
+      entities: [...prevState.entities, newEntity],
+      newEntityName: '',
+      isNewEntityVisible: false
+    }))
+  }
+
+  onChangeEntityName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      newEntityName: event.target.value
+    })
   }
 
   public render() {
@@ -149,6 +176,11 @@ class App extends React.Component<{}, State> {
                 </div>
               </div>
             </div>
+            {this.state.isNewEntityVisible
+              && <div className="newEntity">
+                <input type="text" value={this.state.newEntityName} onChange={this.onChangeEntityName} placeholder="Enter new entity name" />
+                <button className="primary" onClick={this.onClickSubmitNewEntity}>Add Entity</button>
+              </div>}
           </div>
         </header>
         <main>
