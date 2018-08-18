@@ -186,7 +186,7 @@ class App extends React.Component<{}, State> {
         <main>
           <section>
             <h2>What is it?</h2>
-            <p>React component to help labeling entities within a given string of text. Built on: <a href="https://www.slatejs.org" target="_blank" >slate.js</a>. Use case is within other language understanding applications such as <a href="https://www.slatejs.org" target="_blank" >luis.ai</a></p>
+            <p>React component to help labeling entities within a given string of text. Built on: <a href="https://www.slatejs.org" target="_blank" >slate.js</a>. Use case is within other language understanding applications such as <a href="https://luis.ai" target="_blank" >luis.ai</a></p>
             <h2>Getting Started</h2>
             <div>
               <b>1. Install</b>
