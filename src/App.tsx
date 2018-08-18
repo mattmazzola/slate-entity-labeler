@@ -133,7 +133,7 @@ class App extends React.Component<{}, State> {
                 <div className="header">Entities:</div>
                 <ul>
                   {this.state.entities.map(e => 
-                    <li>{e.name}</li>
+                    <li key={e.id}>{e.name}</li>
                   )}
                 </ul>
               </div>
@@ -141,8 +141,8 @@ class App extends React.Component<{}, State> {
               <div>
                 <div className="header">Labels:</div>
                 <div className="labels">
-                  {this.state.labeledEntities.map(le =>
-                    <React.Fragment>
+                  {this.state.labeledEntities.map((le, i) =>
+                    <React.Fragment key={i}>
                       <div>{le.data.option.name}</div><div>[{le.startIndex},{le.endIndex}]</div><div>{le.data.text}</div>
                     </React.Fragment>
                   )}
