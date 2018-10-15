@@ -199,7 +199,7 @@ class App extends React.Component<{}, State> {
               </pre>
               <b>3. Declare</b>
               <pre>
-{`<SateEntityLabeler
+{`<SlateEntityLabeler
   text={this.state.text}
   entities={this.state.entities}
   labeledEntities={this.state.labeledEntities}
@@ -235,7 +235,7 @@ class App extends React.Component<{}, State> {
           <p>Notice the internal update cycle and the external update cycle</p>
 
           <h2>🔧 Internals:</h2>
-          <p>If you're interested in how two inputs: string of text, and list of labeled entities converted into slate value for render</p>
+          <p>If you're interested in how the two inputs: string of text, and list of labeled entities are converted into a slate value for render see below</p>
           <pre>{`convertEntitiesAndTextToTokenizedEditorValue(text, labeledEntities)`}</pre>
           <div className="steps">
               <div>{`1. tokenizeText(text)`}</div>
