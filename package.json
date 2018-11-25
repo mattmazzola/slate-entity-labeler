@@ -2,6 +2,9 @@
   "name": "slate-entity-labeler",
   "version": "0.1.2",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "author": {
     "name": "Matt Mazzola",
     "email": "mattmazzola@live.com"
