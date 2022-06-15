@@ -14,6 +14,7 @@
 
 .cl-entity-node {
     position: relative;
+    display: inline-flex;
 }
 
 .cl-entity-node__text {
